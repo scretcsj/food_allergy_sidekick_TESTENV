@@ -1,4 +1,0 @@
-### Coding Challenges
-
-> The error you're seeing is because MultiSelectField returns a list-like object (MSFList) which doesn't have an .all() method. 
-Instead, you should iterate directly over the allergies attribute without calling .all().
