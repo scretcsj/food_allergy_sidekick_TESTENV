@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Welcome to Food Allergy Sidekick!</h1>
+    <p>
+        {% if user.is_authenticated %}
+            Hello, {{ user.username }}! You can <a href="{% url 'view_profile' %}">view your profile</a> or <a href="{% url 'edit_profile' %}">edit your profile</a>.
+        {% else %}
+            <a href="{% url 'signup' %}">Sign up</a> or <a href="{% url 'login' %}">log in</a> to get started.
+        {% endif %}
+    </p>
+{% endblock %}
