@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UserProfileForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 
 def home(request):
@@ -52,7 +52,6 @@ def edit_profile(request):
             return redirect('view_profile')
     else:
         form = UserProfileForm(instance=profile)
-    
     return render(request, 'edit_profile.html', {'form': form})
 
 @login_required
@@ -76,3 +75,18 @@ def login_user(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important to update the session to keep the user logged in
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('view_profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request, 'change_password.html', {'form': form})

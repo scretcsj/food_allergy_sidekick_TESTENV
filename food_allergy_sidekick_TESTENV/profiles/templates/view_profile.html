@@ -20,6 +20,20 @@
     tr:nth-child(even) {
       background-color: #dddddd;
     }
+
+    a:link, a:visited {
+    background-color: #0b802e;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    }
+
+    a:hover, a:active {
+    background-color: rgb(22, 0, 221);
+    }
+    
     </style>
     </head>
     <body>
@@ -44,4 +58,5 @@
     {% endif %}
     <br>
 <a href="{% url 'edit_profile' %}">Edit Profile</a>
+<a href="{% url 'change_password' %}">Change Password</a>
 {% endblock %}

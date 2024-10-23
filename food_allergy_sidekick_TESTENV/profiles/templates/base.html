@@ -2,14 +2,28 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
+    <style>
+        a:link, a:visited {
+        background-color: #0b802e;
+        color: white;
+        padding: 7px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        }
+        
+        a:hover, a:active {
+        background-color: rgb(22, 0, 221);
+        }
+        </style>
 </head>
 <body>
     <nav>
         <a href="{% url 'home' %}">Home</a>
         {% if user.is_authenticated %}
-            <span>Welcome, {{ user.username }}!</span>
-            <a href="{% url 'view_profile' %}">Profile</a>
-            <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'view_profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <span>Welcome, {{ user.username }}!</span>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'signup' %}">Sign Up</a>
