@@ -19,6 +19,10 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Save allergies to user profile
+            user_profile = UserProfile.objects.create(user=user)
+            user_profile.allergies = form.cleaned_data['allergies']
+            user_profile.save()
             login(request, user)
             messages.success(request, 'You have successfully signed up!')
             return redirect('view_profile')
