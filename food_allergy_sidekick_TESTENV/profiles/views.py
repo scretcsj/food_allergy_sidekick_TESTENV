@@ -41,18 +41,40 @@ def view_profile(request):
         })
 
 
+# @login_required
+# def edit_profile(request):
+#     profile, created = UserProfile.objects.get_or_create(user=request.user)
+#     if request.method == 'POST':
+#         form = UserProfileForm(request.POST, instance=profile)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your profile has been updated.')
+#             return redirect('view_profile')
+#     else:
+#         form = UserProfileForm(instance=profile)
+#     return render(request, 'edit_profile.html', {'form': form})
+
+
 @login_required
 def edit_profile(request):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    profile = request.user.userprofile
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
-            form.save()
+            profile = form.save()
+            user = profile.user
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.save()
             messages.success(request, 'Your profile has been updated.')
             return redirect('view_profile')
     else:
-        form = UserProfileForm(instance=profile)
+        form = UserProfileForm(instance=profile, initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+        })
     return render(request, 'edit_profile.html', {'form': form})
+
 
 @login_required
 def logout_user(request):
