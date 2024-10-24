@@ -8,6 +8,11 @@ Instead, you should iterate directly over the allergies attribute without callin
 
 <summary>Project Changes</summary>
 
+> 10/24/24
+
+- [x] Additional profile fields can be updated. First and Last name
+- [x] Users can add profile images
+
 > 10/22/24
 
 - [x] Moved User creation and allergy customization to this testenv

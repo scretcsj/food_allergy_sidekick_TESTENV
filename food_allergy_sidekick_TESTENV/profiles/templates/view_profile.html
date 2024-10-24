@@ -5,64 +5,49 @@
 {% block content %}
 <style>
     table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 50%;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
     }
-    
-    td, th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
-    
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
-
-    a:link, a:visited {
-    background-color: #0b802e;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    }
-
-    a:hover, a:active {
-    background-color: rgb(22, 0, 221);
+    td,th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
     }
 </style>
-</head>
 
 <h1>Profile for {{ request.user.username }}</h1>
 <h2>Personal Information</h2>
 <p>First Name: {{ request.user.first_name }}</p>
 <p>Last Name: {{ request.user.last_name }}</p>
+<p>Profile pic:</p>
+<img src="{{ profile.image.url }}" alt="Default Profile Image" width="150">
+
 <body>
-<h2>Allergies</h2>
-{% if allergies %}
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Alternatives</th>                
-        </tr>
-    </thead>
-    <tbody>
-        {% for allergy in profile.allergies %}
+    <h2>Allergies</h2>
+    {% if allergies %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Alternatives</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for allergy in profile.allergies %}
             <tr>
                 <td>{{ allergy }}</td>
                 <!-- Place alternative items here -->
-                <td>allergy.alt logic</td>            
+                <td>allergy.alt logic</td>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
     <p>No allergies listed.</p>
-{% endif %}
-<br>
-<a href="{% url 'edit_profile' %}">Edit Profile</a>
-<a href="{% url 'change_password' %}">Change Password</a>
-{% endblock %}
+    {% endif %}
+    <br>
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+    <a href="{% url 'change_password' %}">Change Password</a>
+</body>
+    {% endblock %}

@@ -42,6 +42,7 @@ def view_profile(request):
 
 
 # @login_required
+# adjusting edit profile for extra fields and images
 # def edit_profile(request):
 #     profile, created = UserProfile.objects.get_or_create(user=request.user)
 #     if request.method == 'POST':
@@ -59,7 +60,7 @@ def view_profile(request):
 def edit_profile(request):
     profile = request.user.userprofile
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             profile = form.save()
             user = profile.user
