@@ -24,3 +24,11 @@ Instead, you should iterate directly over the allergies attribute without callin
 - [x] Moved User creation and allergy customization to this testenv
 
 </details>
+
+### Major Features
+
+- [x] User Profile
+- [x] User Profile (custom detials)
+- [x] Search recipes in .db
+- [x] User can add recipes to .db
+ 
