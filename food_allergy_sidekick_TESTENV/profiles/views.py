@@ -7,11 +7,25 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
+from recipes.models import Recipe
+from recipes.forms import RecipeSearchForm, RecipeForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 
 def home(request):
-    return render(request, 'home.html')
+    form = RecipeSearchForm()
+    recipes = Recipe.objects.all()
+
+    if request.GET.get('query'):
+            form = RecipeSearchForm(request.GET)
+            if form.is_valid():
+                query = form.cleaned_data['query']
+                recipes = Recipe.objects.filter(title__icontains=query) | Recipe.objects.filter(ingredients__icontains=query)
+
+    return render(request, 'home.html', {
+        'form': form,
+        'recipes': recipes,
+    })
 
 
 def signup(request):
@@ -35,10 +49,29 @@ def signup(request):
 def view_profile(request):
     profile, created = UserProfile.objects.get_or_create(user=request.user)
     allergies = profile.allergies  # Directly access the MSFList
+    recipe_form = RecipeForm()
     return render(request, 'view_profile.html', {
         'profile': profile,
         'allergies': allergies,
+        'recipe_form': recipe_form,
         })
+
+
+@login_required
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.user = request.user
+            recipe.save()
+            messages.success(request, 'Recipe added successfully!')
+            return redirect('view_profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = RecipeForm()
+    return render(request, 'add_recipe.html', {'form': form})
 
 
 # @login_required

@@ -8,6 +8,12 @@ Instead, you should iterate directly over the allergies attribute without callin
 
 <summary>Project Changes</summary>
 
+> 10/25/24
+
+- [x] Sample Recipes added at admin console
+- [x] Search functionality. User can search by title or ingredient.
+- [x] Users can add a recipe from their profile. Some logic built into view to break steps and ingredients into separate line based on '\n' characters
+
 > 10/24/24
 
 - [x] Additional profile fields can be updated. First and Last name

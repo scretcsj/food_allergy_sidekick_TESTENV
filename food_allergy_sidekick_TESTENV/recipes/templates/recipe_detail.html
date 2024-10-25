@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+{% block content %}
+<hr>
+<h1>{{ recipe.title }}</h1>
+<hr>
+<h3>Recipe provided by: {{ recipe.user.username }}</h3>
+<p><strong>Ingredients:</strong></p>
+<ul>
+    {% for ingredient in ingredients %}
+        <li>{{ ingredient }}
+        <select style="margin-left: 20px;">
+            <option>Request Alternative</option>
+            <option>Alternative 1</option>
+            <option>Alternative 2</option>
+            <option>Alternative 3</option>
+        </select>
+        </li>
+    {% endfor %}
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol>
+    {% for instruction in instructions %}
+        <li>{{ instruction }}</li>
+    {% endfor %}
+</ol>
+{% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="150">
+{% endif %}
+{% endblock %}
