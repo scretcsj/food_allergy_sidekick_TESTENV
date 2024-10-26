@@ -46,6 +46,9 @@
         <tbody>
             {% for recipe in recipes %}
             <tr>
+                <!-- <td>{{ recipe.strmeal }}</td>
+                <td>{{ recipe.stringredient1 }}, {{ recipe.stringredient2 }}</td>
+                <td>{{ recipe.strinstructions }}</td> -->
                 <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a></td>
                 <td>{{ recipe.ingredients|truncatechars:100 }}</td>
                 <td>{{ recipe.instructions|truncatechars:100 }}</td>

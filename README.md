@@ -8,6 +8,10 @@ Instead, you should iterate directly over the allergies attribute without callin
 
 <summary>Project Changes</summary>
 
+> 10/26/24
+
+- [x] Moved sample recipes over to this project for additional testing. 
+
 > 10/25/24
 
 - [x] Sample Recipes added at admin console

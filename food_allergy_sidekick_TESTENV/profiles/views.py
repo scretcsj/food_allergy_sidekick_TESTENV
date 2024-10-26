@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from .models import UserProfile
-from recipes.models import Recipe
+from recipes.models import Recipe, KeyValueStore
 from recipes.forms import RecipeSearchForm, RecipeForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
@@ -15,6 +15,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 def home(request):
     form = RecipeSearchForm()
     recipes = Recipe.objects.all()
+    # recipes = KeyValueStore.objects.all() # Sample recipes object
 
     if request.GET.get('query'):
             form = RecipeSearchForm(request.GET)
