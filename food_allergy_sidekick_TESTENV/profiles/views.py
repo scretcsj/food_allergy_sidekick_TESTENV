@@ -8,14 +8,14 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib import messages
 from .models import UserProfile
 from recipes.models import Recipe, KeyValueStore
-from recipes.forms import RecipeSearchForm, RecipeForm
+from recipes.forms import RecipeSearchForm, RecipeForm, KeyValueStoreForm, KeyValueStoreSearchForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 
+# Custom recipe model displayed on home page
 def home(request):
     form = RecipeSearchForm()
     recipes = Recipe.objects.all()
-    # recipes = KeyValueStore.objects.all() # Sample recipes object
 
     if request.GET.get('query'):
             form = RecipeSearchForm(request.GET)
@@ -27,6 +27,22 @@ def home(request):
         'form': form,
         'recipes': recipes,
     })
+
+# View with sample recipe model
+# def home(request):
+#     form = KeyValueStoreSearchForm()
+#     recipes = KeyValueStore.objects.all()
+
+#     if request.GET.get('query'):
+#             form = KeyValueStoreSearchForm(request.GET)
+#             if form.is_valid():
+#                 query = form.cleaned_data['query']
+#                 recipes = KeyValueStore.objects.filter(strmeal__icontains=query) | KeyValueStore.objects.filter(stringredient1__icontains=query)
+
+#     return render(request, 'home.html', {
+#         'form': form,
+#         'recipes': recipes,
+#     })
 
 
 def signup(request):

@@ -13,7 +13,8 @@
     <ul>
         {% for recipe in results %}
             <li>
-                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
+                <!-- custom recipe {{ recipe.title }} -->
+                <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a>
             </li>
         {% endfor %}
     </ul>

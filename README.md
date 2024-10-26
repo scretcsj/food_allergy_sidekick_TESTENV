@@ -10,7 +10,8 @@ Instead, you should iterate directly over the allergies attribute without callin
 
 > 10/26/24
 
-- [x] Moved sample recipes over to this project for additional testing. 
+- [x] Moved sample recipes over to this project for additional testing.
+- [x] Search feature built into sample .db as well.
 
 > 10/25/24
 

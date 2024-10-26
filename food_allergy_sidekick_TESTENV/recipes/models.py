@@ -17,6 +17,7 @@ class KeyValueStore(models.Model):
     id = models.IntegerField(db_column='ID', blank=True, null=False, primary_key=True)  # Field name made lowercase.
     idmeal = models.IntegerField(db_column='idMeal', blank=True, null=True)  # Field name made lowercase.
     strmeal = models.TextField(db_column='strMeal', blank=True, null=True)  # Field name made lowercase.
+    image = models.ImageField(upload_to='recipe_images/', blank=True, null=True, default='recipe_images/food_icon.jpg')
     strcategory = models.TextField(db_column='strCategory', blank=True, null=True)  # Field name made lowercase.
     strarea = models.TextField(db_column='strArea', blank=True, null=True)  # Field name made lowercase.
     strinstructions = models.TextField(db_column='strInstructions', blank=True, null=True)  # Field name made lowercase.
