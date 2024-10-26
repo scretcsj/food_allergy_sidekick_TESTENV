@@ -12,6 +12,8 @@ Instead, you should iterate directly over the allergies attribute without callin
 
 - [x] Moved sample recipes over to this project for additional testing.
 - [x] Search feature built into sample .db as well.
+- [x] Click to see alternative milestone working
+- [x] Images are not explicited called based on recipe unique ID
 
 > 10/25/24
 

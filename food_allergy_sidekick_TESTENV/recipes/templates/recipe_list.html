@@ -4,10 +4,22 @@
 
 {% block content %}
 <h1>All Recipes</h1>
-<ul>
+
+<!-- Custom Model -->
+<!-- <ul>
     {% for recipe in recipes %}
         <li>
             <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'search_recipes' %}">Search Recipes</a> -->
+
+<!-- KeyValueStore Model -->
+<ul>
+    {% for recipe in recipes %}
+        <li>
+            <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a>
         </li>
     {% endfor %}
 </ul>

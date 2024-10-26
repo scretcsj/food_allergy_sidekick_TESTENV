@@ -5,33 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<hr>
-<!-- custom recipe model -->
-<h1>{{ recipe.title }}</h1>
-<hr>
-<h3>Recipe provided by: {{ recipe.user.username }}</h3>
-<p><strong>Ingredients:</strong></p>
-<ul>
-    <!-- Custom model detail -->
-    {% for ingredient in ingredients %}
-        <li>
-            {{ ingredient }}
-            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
-                <option>Request Alternative</option>
-            </select>
-        </li>
-        {% endfor %}
-</ul>
-<p><strong>Instructions:</strong></p>
-<ol>
-    {% for instruction in instructions %}
-        <li>{{ instruction }}</li>
-    {% endfor %}
-</ol>
-{% if recipe.image %}
-    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="150">
-{% endif %}
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -68,4 +41,62 @@
         });
     });
 </script>
+
+
+
+<!-- custom recipe model -->
+<!-- <hr>
+<h1>{{ recipe.title }}</h1>
+<hr>
+<h3>Recipe provided by: {{ recipe.user.username }}</h3>
+<p><strong>Ingredients:</strong></p>
+<ul>
+    {% for ingredient in ingredients %}
+        <li>
+            {{ ingredient }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>
+        </li>
+        {% endfor %}
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol>
+    {% for instruction in instructions %}
+        <li>{{ instruction }}</li>
+    {% endfor %}
+</ol>
+{% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="150">
+{% endif %} -->
+
+
+<!-- KeyValueStore recipe model -->
+<hr>
+<h1>{{ recipe.strmeal }}</h1>
+<hr>
+<h3>Recipe provided by: {{ recipe.user.username }}</h3>
+<p><strong>Ingredients:</strong></p>
+<ul>
+    <!-- Move into loop once stringredient cols are combined -->
+    <!-- {% for ingredient in ingredients %}
+    {% endfor %} -->
+        <li>
+            {{ recipe.stringredient1 }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>
+        </li>
+</ul>
+
+<p><strong>Instructions:</strong></p>
+<ol>
+    <!-- Move into loop once line break worked out -->
+    {% for instruction in instructions %}
+    <li>{{ instruction }}</li>
+    {% endfor %}
+</ol>
+<img src="{{ image_url }}" alt="{{ recipe.strmeal }} image" width="250">
+
+
 {% endblock %}

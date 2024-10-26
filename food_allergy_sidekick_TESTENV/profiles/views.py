@@ -12,37 +12,38 @@ from recipes.forms import RecipeSearchForm, RecipeForm, KeyValueStoreForm, KeyVa
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 
-# Custom recipe model displayed on home page
-def home(request):
-    form = RecipeSearchForm()
-    recipes = Recipe.objects.all()
-
-    if request.GET.get('query'):
-            form = RecipeSearchForm(request.GET)
-            if form.is_valid():
-                query = form.cleaned_data['query']
-                recipes = Recipe.objects.filter(title__icontains=query) | Recipe.objects.filter(ingredients__icontains=query)
-
-    return render(request, 'home.html', {
-        'form': form,
-        'recipes': recipes,
-    })
-
-# View with sample recipe model
+# Custom recipe model
 # def home(request):
-#     form = KeyValueStoreSearchForm()
-#     recipes = KeyValueStore.objects.all()
+#     form = RecipeSearchForm()
+#     recipes = Recipe.objects.all()
 
 #     if request.GET.get('query'):
-#             form = KeyValueStoreSearchForm(request.GET)
+#             form = RecipeSearchForm(request.GET)
 #             if form.is_valid():
 #                 query = form.cleaned_data['query']
-#                 recipes = KeyValueStore.objects.filter(strmeal__icontains=query) | KeyValueStore.objects.filter(stringredient1__icontains=query)
+#                 recipes = Recipe.objects.filter(title__icontains=query) | Recipe.objects.filter(ingredients__icontains=query)
 
 #     return render(request, 'home.html', {
 #         'form': form,
 #         'recipes': recipes,
 #     })
+
+
+# KeyValueStore Model
+def home(request):
+    form = KeyValueStoreSearchForm()
+    recipes = KeyValueStore.objects.all()
+
+    if request.GET.get('query'):
+            form = KeyValueStoreSearchForm(request.GET)
+            if form.is_valid():
+                query = form.cleaned_data['query']
+                recipes = KeyValueStore.objects.filter(strmeal__icontains=query) | KeyValueStore.objects.filter(stringredient1__icontains=query)
+
+    return render(request, 'home.html', {
+        'form': form,
+        'recipes': recipes,
+    })
 
 
 def signup(request):

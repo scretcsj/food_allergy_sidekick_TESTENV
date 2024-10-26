@@ -5,7 +5,7 @@
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
-        width: 50%;
+        width: 75%;
     }
 
     td,
@@ -20,21 +20,16 @@
     <hr>
     <h1>Welcome to Food Allergy Sidekick</h1>
     <hr>
-    <!-- <p>
-        {% if user.is_authenticated %}
-        Hello, {{ user.username }}! You can <a href="{% url 'view_profile' %}">view your profile</a> or <a
-            href="{% url 'edit_profile' %}">edit your profile</a>.
-        {% else %}
-        <a href="{% url 'signup' %}">Sign up</a> or <a href="{% url 'login' %}">log in</a> to get started.
-        {% endif %}
-    </p> -->
     <h2>Search Recipes</h2>
     <form method="GET" action=".">
         {{ form.as_p }}
         <button type="submit">Search</button>
     </form>
     <br>
-    <h2>All Recipes</h2>
+
+
+    <!-- Custom Recipe Model -->
+    <!-- <h2>All Recipes</h2>
     <table>
         <thead>
             <tr>
@@ -46,18 +41,38 @@
         <tbody>
             {% for recipe in recipes %}
             <tr>
-                <!-- Sample recipe details -->
-                <!-- <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a></td>
-                <td>{{ recipe.stringredient1 }}, {{ recipe.stringredient2 }}</td>
-                <td>{{ recipe.strinstructions }}</td> -->
-                <!-- Custom Recipe details -->
                 <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.title }}</a></td>
                 <td>{{ recipe.ingredients|truncatechars:100 }}</td>
                 <td>{{ recipe.instructions|truncatechars:100 }}</td>
             </tr>
             {% endfor %}
         </tbody>
-    </table>     
+    </table> -->
+    
+
+    
+    <!-- KeyValueStore Model -->
+    <h2>All Recipes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>                
+                <th>Ingredients</th>
+                <th>Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+            <tr>
+                <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a></td>
+                <td>{{ recipe.strcategory }}</td>
+                <td>{{ recipe.stringredient1 }}, {{ recipe.stringredient2 }}</td>
+                <td>{{ recipe.strinstructions }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>      
 
 </div>
 {% endblock %}
