@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import Recipe, KeyValueStore
 from .forms import RecipeForm, RecipeSearchForm, KeyValueStoreForm, KeyValueStoreSearchForm
 from django.conf import settings
+from django.http import JsonResponse
+import subprocess
 import os
 
 
@@ -33,6 +35,22 @@ def search_recipes(request):
         form = RecipeSearchForm()
     return render(request, 'recipe_search.html', {'form': form})
 
+
+def run_script(request):
+    if request.method == "POST":
+        ingredient = request.POST.get('ingredient')
+        script_output = subprocess.check_output(['python', 'scripts/Test.py', ingredient], text=True)
+        alternatives = script_output.splitlines()
+        return JsonResponse({"script_output": alternatives})
+    return JsonResponse({"message": "Invalid request"}, status=400)
+
+# def run_script(request):
+#     if request.method == "POST":
+#         # Run your script and capture its output
+#         script_output = subprocess.check_output(['python', 'scripts/Test.py'], text=True)
+#         # Return the output as a JSON response
+#         return JsonResponse({"script_output": script_output.splitlines()})
+#     return JsonResponse({"message": "Invalid request"}, status=400)
 
 # Sample Recipes .db views. rebuild each above if neccessary
 # def recipe_list(request):

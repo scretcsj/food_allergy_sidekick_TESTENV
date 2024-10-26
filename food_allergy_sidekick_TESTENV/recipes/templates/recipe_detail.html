@@ -1,37 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ recipe.title }}{% endblock %}
+{% block title %}
+    {{ recipe.title }}
+{% endblock %}
 
 {% block content %}
 <hr>
 <!-- custom recipe model -->
 <h1>{{ recipe.title }}</h1>
-<!-- sample recipe model -->
-<!-- <h1>{{ recipe.strmeal }}</h1> -->
 <hr>
 <h3>Recipe provided by: {{ recipe.user.username }}</h3>
 <p><strong>Ingredients:</strong></p>
 <ul>
     <!-- Custom model detail -->
     {% for ingredient in ingredients %}
-        <li>{{ ingredient }}
-        <select style="margin-left: 20px;">
-            <option>Request Alternative</option>
-            <option>Alternative 1</option>
-            <option>Alternative 2</option>
-            <option>Alternative 3</option>
-        </select>
+        <li>
+            {{ ingredient }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>
         </li>
-    {% endfor %}
-    <!-- Sample recipe detail. no for loop since each ingredient has its own col. stringredient1,2,3 etc. -->
-    <!-- <li>{{ recipe.stringredient1 }}
-    <select style="margin-left: 20px;">
-        <option>Request Alternative</option>
-        <option>Alternative 1</option>
-        <option>Alternative 2</option>
-        <option>Alternative 3</option>
-    </select>
-    </li> -->
+        {% endfor %}
 </ul>
 <p><strong>Instructions:</strong></p>
 <ol>
@@ -39,10 +28,44 @@
         <li>{{ instruction }}</li>
     {% endfor %}
 </ol>
-    {% if recipe.image %}
-    <!-- custom recipe model {{ recipe.title }} -->
+{% if recipe.image %}
     <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" width="150">
-    {% endif %}
-    <!-- sample recipe model -->
-    <!-- <img src="{{ recipe.id }}" alt="{{ recipe.strmeal }}" width="150"> -->
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.alternative-dropdown').one('click', function() { // Use 'one' to run only on first click
+            var ingredient = $(this).data('ingredient');
+            var dropdown = $(this); // Save reference to dropdown
+            console.log("Selected ingredient:", ingredient); // Debug log
+            $.ajax({
+                type: 'POST',
+                url: '{% url "run_script" %}',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    ingredient: ingredient
+                },
+                success: function(response) {
+                    console.log("AJAX success:", response); // Debug log
+                    dropdown.empty(); // Clear the dropdown options
+                    dropdown.append($('<option>', {
+                        value: "",
+                        text: "Select an option"
+                    })); // Add default option
+                    response.script_output.forEach(function(option) {
+                        dropdown.append($('<option>', {
+                            value: option,
+                            text: option
+                        }));
+                    });
+                },
+                error: function(response) {
+                    console.log('AJAX error:', response); // Debug log
+                    $('#response-message').text('Error: ' + response.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
