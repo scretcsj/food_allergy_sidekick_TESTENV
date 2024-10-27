@@ -3,17 +3,42 @@
 > I tried displaying the allergies within the admin console and received an MSFList error. Feedback: The error you're seeing is because MultiSelectField returns a list-like object (MSFList) which doesn't have an .all() method. 
 Instead, you should iterate directly over the allergies attribute without calling .all().
 
+> Cannot add new recipes as the current model is not auto generating a unique ID
+
+### Insights
+
+> Combined all stringredient cols using the following:
+
+```python
+from recipes.models import KeyValueStore
+
+# Assuming you have up to 20 ingredients and measurements
+for recipe in KeyValueStore.objects.all():
+    combined_ingredients = []
+    for i in range(1, 21):
+        ingredient = getattr(recipe, f'stringredient{i}')
+        measure = getattr(recipe, f'strmeasure{i}')
+        if ingredient and measure:
+            combined_ingredients.append(f'{measure} {ingredient}')
+        elif ingredient:
+            combined_ingredients.append(ingredient)
+    recipe.ingredients = '\n'.join(combined_ingredients)
+    recipe.save()
+```
 
 <details>
 
 <summary>Project Changes</summary>
+
+> 10/27/24
+- [x] Combined measures and ingredients into new model fields for easier integration into html view
 
 > 10/26/24
 
 - [x] Moved sample recipes over to this project for additional testing.
 - [x] Search feature built into sample .db as well.
 - [x] Click to see alternative milestone working
-- [x] Images are not explicited called based on recipe unique ID
+- [x] Images are now explicited called based on recipe unique ID
 
 > 10/25/24
 
