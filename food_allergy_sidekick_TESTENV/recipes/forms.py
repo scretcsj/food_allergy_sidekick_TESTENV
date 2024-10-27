@@ -17,11 +17,11 @@ class RecipeSearchForm(forms.Form):
     )
 
 
-# Sample recipe forms
+# KeyValueStore recipe forms
 class KeyValueStoreForm(forms.ModelForm):
     class Meta:
         model = KeyValueStore
-        fields = ['idmeal', 'stringredient1', 'strinstructions', 'image']
+        fields = ['strmeal', 'strcategory', 'ingredients', 'measurements', 'strinstructions', 'image']
 
 
 class KeyValueStoreSearchForm(forms.Form):

@@ -65,6 +65,8 @@ class KeyValueStore(models.Model):
     strmeasure19 = models.TextField(db_column='strMeasure19', blank=True, null=True)  # Field name made lowercase.
     strmeasure20 = models.TextField(db_column='strMeasure20', blank=True, null=True)  # Field name made lowercase.
     strsource = models.TextField(db_column='strSource', blank=True, null=True)  # Field name made lowercase.
+    ingredients = models.TextField(blank=True, null=True)
+    measurements = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

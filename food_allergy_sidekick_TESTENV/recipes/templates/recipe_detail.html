@@ -5,6 +5,21 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -80,27 +95,66 @@
     {% else %}
     <h3>Recipe provided by: Food Allergy Sidekick Team</h3>
 {% endif %}
-<p><strong>Ingredients:</strong></p>
-<ul>
-    <!-- Move into loop once stringredient cols are combined -->
-    <!-- {% for ingredient in ingredients %}
-    {% endfor %} -->
-        <li>
-            {{ recipe.stringredient1 }}
-            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ recipe.stringredient1 }}">
-                <option>Request Alternative</option>
-            </select>
-        </li>
-</ul>
 
+
+<!-- Ingredients Section -->
+<!-- <p><strong>Ingredients:</strong></p> -->
+<!-- Wrap in for loop when ingredients are combined -->
+<!-- <ul>
+    <li>
+        {{ recipe.stringredient1 }}
+        <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ recipe.stringredient1 }}">
+            <option>Request Alternative</option>
+        </select>
+    </li>
+</ul> -->
+<!-- <ul>
+    {% for ingredient in ingredients %}
+        <li>
+            {{ ingredient }}
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                <option>Request Alternative</option>
+            </select>        
+        </li>
+    {% endfor %}
+</ul> -->
+
+
+<!-- Ingredients and Measurements section -->
+<p><strong>Ingredients and Measurements:</strong></p>
+<table style="text-align: left;">
+    <thead>
+        <tr>
+            <th>Measurement</th>
+            <th>Ingredient</th>
+            <th>Alternative</th>   
+        </tr>
+    </thead>
+    <tbody>
+        {% for ingredient, measure in paired_ingredients %}
+            <tr>
+                <td>{{ measure }}</td>
+                <td>{{ ingredient }}</td>
+                <td>
+                    <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+                        <option>Request Alternative</option>
+                    </select>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- Instructions -->
 <p><strong>Instructions:</strong></p>
 <ol>
-    <!-- Move into loop once line break worked out -->
     {% for instruction in instructions %}
-    <li>{{ instruction }}</li>
+        <li>{{ instruction }}</li>
     {% endfor %}
 </ol>
+
+
+<!-- Reciipe Image -->
 <img src="{{ image_url }}" alt="{{ recipe.strmeal }} image" width="250">
-
-
 {% endblock %}

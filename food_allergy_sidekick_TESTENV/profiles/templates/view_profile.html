@@ -3,18 +3,6 @@
 {% block title %}View Profile{% endblock %}
 
 {% block content %}
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 50%;
-    }
-    td,th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-</style>
 <hr>
 <h1>Profile for {{ request.user.username }}</h1>
 <hr>
@@ -23,38 +11,20 @@
 <h2>Personal Information</h2>
 <p>First Name: {{ request.user.first_name }}</p>
 <p>Last Name: {{ request.user.last_name }}</p>
-<p>Profile pic:</p>
-<img src="{{ profile.image.url }}" alt="Default Profile Image" width="150">
+<img src="{{ profile.image.url }}" alt="Profile Image" width="150">
 
-<body>
-    <h2>Allergies</h2>
-    {% if allergies %}
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Alternatives</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for allergy in profile.allergies %}
-            <tr>
-                <td>{{ allergy }}</td>
-                <!-- Place alternative items here -->
-                <td>allergy.alt logic</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No allergies listed.</p>
-    {% endif %}
-    <br>
-    <h2>Add a New Recipe to the Site</h2>
-    <form method="post" enctype="multipart/form-data" action="{% url 'add_recipe' %}">
-        {% csrf_token %}
-        {{ recipe_form.as_p }}
-        <button type="submit">Add Recipe</button>
-    </form>
+<h2>Allergies:</h2>
+<ul>
+    {% for allergy in profile.allergies %}
+    <li>{{ allergy }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Add a New Recipe</h2>
+<form method="post" enctype="multipart/form-data" action="{% url 'add_recipe' %}">
+    {% csrf_token %}
+    {{ recipe_form.as_p }}
+    <button type="submit">Add Recipe</button>
+</form>
 </body>
-    {% endblock %}
+{% endblock %}

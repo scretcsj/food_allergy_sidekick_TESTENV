@@ -62,34 +62,64 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+# Custom Recipe Model
+# @login_required
+# def view_profile(request):
+#     profile, created = UserProfile.objects.get_or_create(user=request.user)
+#     allergies = profile.allergies  # Directly access the MSFList
+#     recipe_form = RecipeForm()
+#     return render(request, 'view_profile.html', {
+#         'profile': profile,
+#         'allergies': allergies,
+#         'recipe_form': recipe_form,
+#         })
+
 
 @login_required
 def view_profile(request):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
-    allergies = profile.allergies  # Directly access the MSFList
-    recipe_form = RecipeForm()
+    profile = request.user.userprofile
+    form = UserProfileForm(instance=profile)
+    recipe_form = KeyValueStoreForm()
+
     return render(request, 'view_profile.html', {
         'profile': profile,
-        'allergies': allergies,
-        'recipe_form': recipe_form,
-        })
+        'form': form,
+        'recipe_form': recipe_form
+    })
+
+# Custom Recipe Model form
+# @login_required
+# def add_recipe(request):
+#     if request.method == 'POST':
+#         form = RecipeForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             recipe = form.save(commit=False)
+#             recipe.user = request.user
+#             recipe.save()
+#             messages.success(request, 'Recipe added successfully!')
+#             return redirect('view_profile')
+#         else:
+#             messages.error(request, 'Please correct the error below.')
+#     else:
+#         form = RecipeForm()
+#     return render(request, 'add_recipe.html', {'form': form})
 
 
+# KeyValueStore Model
 @login_required
 def add_recipe(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
+        form = KeyValueStoreForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save(commit=False)
-            recipe.user = request.user
             recipe.save()
             messages.success(request, 'Recipe added successfully!')
-            return redirect('view_profile')
+            return redirect('recipe_detail', pk=recipe.pk)  
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = RecipeForm()
-    return render(request, 'add_recipe.html', {'form': form})
+        form = KeyValueStoreForm()
+    return render(request, 'add_recipe.html', {'form'})
 
 
 # @login_required

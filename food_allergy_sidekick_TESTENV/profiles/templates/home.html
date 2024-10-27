@@ -5,7 +5,7 @@
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
-        width: 75%;
+        width: 100%;
     }
 
     td,
@@ -67,7 +67,7 @@
             <tr>
                 <td><a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.strmeal }}</a></td>
                 <td>{{ recipe.strcategory }}</td>
-                <td>{{ recipe.stringredient1 }}, {{ recipe.stringredient2 }}</td>
+                <td>{{ recipe.ingredients }}</td>
                 <td>{{ recipe.strinstructions }}</td>
             </tr>
             {% endfor %}

@@ -47,12 +47,16 @@ def recipe_list(request):
 
 def recipe_detail(request, pk):
     recipe = get_object_or_404(KeyValueStore, pk=pk)
-    ingredients = recipe.stringredient1
-    instructions = recipe.strinstructions.split('\r\n') if recipe.strinstructions else []
+    ingredients = recipe.ingredients.split('\n') if recipe.ingredients else []
+    measurements = recipe.measurements.split('\n') if recipe.measurements else []
+    paired_ingredients = zip(ingredients, measurements)  # Pair ingredients and measurements
+    instructions = recipe.strinstructions.split('\n') if recipe.strinstructions else []
     image_url = f"{settings.MEDIA_URL}food_pics/{recipe.id}.png"
     return render(request, 'recipe_detail.html', {
         'recipe': recipe,
         'ingredients': ingredients,
+        'measurements': measurements,
+        'paired_ingredients': paired_ingredients,
         'instructions': instructions,
         'image_url': image_url,
     })
