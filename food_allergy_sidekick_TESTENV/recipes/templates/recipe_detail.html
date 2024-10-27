@@ -75,7 +75,11 @@
 <hr>
 <h1>{{ recipe.strmeal }}</h1>
 <hr>
-<h3>Recipe provided by: {{ recipe.user.username }}</h3>
+{% if recipe.user.username %}
+    <h3>Recipe provided by: {{ recipe.user.username }}</h3>
+    {% else %}
+    <h3>Recipe provided by: Food Allergy Sidekick Team</h3>
+{% endif %}
 <p><strong>Ingredients:</strong></p>
 <ul>
     <!-- Move into loop once stringredient cols are combined -->
@@ -83,7 +87,7 @@
     {% endfor %} -->
         <li>
             {{ recipe.stringredient1 }}
-            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ ingredient }}">
+            <select style="margin-left: 20px;" class="alternative-dropdown" data-ingredient="{{ recipe.stringredient1 }}">
                 <option>Request Alternative</option>
             </select>
         </li>
